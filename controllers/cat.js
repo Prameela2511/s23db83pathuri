@@ -23,6 +23,8 @@ res.send('NOT IMPLEMENTED: cat delete DELETE ' + req.params.id);
 exports.cat_update_put = function(req, res) {
 res.send('NOT IMPLEMENTED: cat update PUT' + req.params.id);
 };
+
+
 exports.cat_view_all_Page = async function(req, res) {
     try{
     thecats = await cat.find();
