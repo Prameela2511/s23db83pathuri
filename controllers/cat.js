@@ -62,4 +62,63 @@ exports.cat_detail = async function(req, res) {
     res.send(`{"error": document for id ${req.params.id} not found`);
     }
     };
-    
+ 
+    //Handle cat update form on PUT.
+exports.cat_update_put = async function(req, res) {
+    console.log(`update on id ${req.params.id} with body
+    ${JSON.stringify(req.body)}`)
+    try {
+    let toUpdate = await cat.findById( req.params.id)
+    // Do updates of properties
+    if(req.body.cat_color)
+    toUpdate.cat_color = req.body.cat_color;
+    if(req.body.cat_breed) toUpdate.cat_breed = req.body.cat_breed;
+    if(req.body.cat_price) toUpdate.cat_price = req.body.cat_price;
+    let result = await toUpdate.save();
+    console.log("Sucess " + result)
+    res.send(result)
+    } catch (err) {
+    res.status(500)
+    res.send(`{"error": ${err}: Update for id ${req.params.id}
+    failed`);
+    }
+    };
+
+    // Handle cat delete on DELETE.
+exports.cat_delete = async function(req, res) {
+    console.log("delete " + req.params.id)
+    try {
+    result = await cat.findByIdAndDelete( req.params.id)
+    console.log("Removed " + result)
+    res.send(result)
+    } catch (err) {
+    res.status(500)
+    res.send(`{"error": Error deleting ${err}}`);
+    }
+    };
+    // Handle a show one view with id specified by query
+exports.cat_view_one_Page = async function(req, res) {
+    console.log("single view for id " + req.query.id)
+    try{
+    result = await cat.findById( req.query.id)
+    res.render('catdetail',
+    { title: 'cat Detail', toShow: result });
+    }
+    catch(err){
+    res.status(500)
+    res.send(`{'error': '${err}'}`);
+    }
+    }
+    // Handle building the view for creating a cat.
+// No body, no in path parameter, no query.
+// Does not need to be async
+exports.cat_create_Page = function(req, res) {
+console.log("create view")
+try{
+res.render('catcreate', { title: 'cat Create'});
+}
+catch(err){
+res.status(500)
+res.send(`{'error': '${err}'}`);
+}
+};

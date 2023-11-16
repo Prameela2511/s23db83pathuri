@@ -1,0 +1,23 @@
+extends layout
+
+block content
+  - if (toShow != null)
+    h1(class='detailh1')= title
+
+    - let catid = toShow._id
+    - let cat_color = toShow.cat_color
+    - let cat_breed = toShow.cat_breed
+    - let cat_price = toShow.cat_price 
+
+    div
+      div.row
+        div(class='catAttr') cat ID is: #{catid} 
+      div.row
+        div(class='catAttr') cat color is: #{cat_color}
+      div.row
+        div(class='catAttr') cat breed is: #{cat_breed} 
+      div.row
+        div(class='catAttr') cat price is: #{cat_price}
+  - else
+    script.
+      alert('Error: No cat found with the provided ID.');

@@ -18,24 +18,3 @@ router.get('/cats/:id', cat_controller.cat_detail);
 // GET request for list of all cat items.
 router.get('/cats', cat_controller.cat_list);
 module.exports = router;
-
-//Handle cat update form on PUT.
-exports.cat_update_put = async function(req, res) {
-console.log(`update on id ${req.params.id} with body
-${JSON.stringify(req.body)}`)
-try {
-let toUpdate = await cat.findById( req.params.id)
-// Do updates of properties
-if(req.body.cat_color)
-toUpdate.cat_color = req.body.cat_color;
-if(req.body.cat_breed) toUpdate.cat_breed = req.body.cat_breed;
-if(req.body.cat_price) toUpdate.cat_price = req.body.cat_price;
-let result = await toUpdate.save();
-console.log("Sucess " + result)
-res.send(result)
-} catch (err) {
-res.status(500)
-res.send(`{"error": ${err}: Update for id ${req.params.id}
-failed`);
-}
-};
