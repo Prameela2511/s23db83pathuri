@@ -122,3 +122,30 @@ res.status(500)
 res.send(`{'error': '${err}'}`);
 }
 };
+// Handle building the view for updating a cat.
+// query provides the id
+exports.cat_update_Page = async function(req, res) {
+    console.log("update view for item "+req.query.id)
+    try{
+    let result = await cat.findById(req.query.id)
+    res.render('catupdate', { title: 'cat Update', toShow: result });
+    }
+    catch(err){
+    res.status(500)
+    res.send(`{'error': '${err}'}`);
+    }
+    };
+    // Handle a delete one view with id from query
+    exports.cat_delete_Page = async function(req, res) {
+    console.log("Delete view for id " + req.query.id)
+    try{
+    result = await cat.findById(req.query.id)
+    res.render('catdelete', { title: 'cat Delete', toShow:
+    result });
+    }
+    catch(err){
+    res.status(500)
+    res.send(`{'error': '${err}'}`);
+    }
+    };
+    
